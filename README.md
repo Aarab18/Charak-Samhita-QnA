@@ -1,70 +1,105 @@
-# Getting Started with Create React App
+# 🌿 Charak Samhita Q&A – AI-Powered Ayurvedic Wisdom
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A modern, interactive web application that bridges the ancient knowledge of the **Charak Samhita** with today's technology. Ask questions in natural language and receive detailed, **cited answers** from an AI trained on classical Ayurvedic texts.
 
-## Available Scripts
+---
 
-In the project directory, you can run:
+## ✨ Key Features
 
-### `npm start`
+- 🔍 **AI-Powered Q&A**  
+  Get detailed, context-aware answers about Ayurvedic concepts, principles, and treatments from the Charak Samhita.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+- 📖 **Cited Sources**  
+  Each answer is backed by specific **chapter and verse references**, providing authenticity and paths for deeper study.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+- 🕑 **Persistent Question History**  
+  Your questions are saved anonymously and persist across sessions on the same device via Firebase.
 
-### `npm test`
+- 🎨 **Thematic & Interactive UI**
+  - Dark mode with parchment-like textures
+  - "Wisdom of the Day" verse greeting
+  - Suggested topics for guided exploration
+  - Elegant glowing focus effects and smooth animations
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- 🔐 **User Authentication**  
+  Firebase Anonymous Authentication enables secure, profile-based history without requiring sign-up.
 
-### `npm run build`
+---
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## 🧰 Tech Stack
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### 🖥 Frontend
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+- [React](https://reactjs.org/) – UI Library  
+- [Tailwind CSS](https://tailwindcss.com/) – Utility-first styling  
+- [Lucide React](https://lucide.dev/) – Icon library  
 
-### `npm run eject`
+### 🔧 Backend & Services
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+- [Firebase](https://firebase.google.com/)  
+  - Authentication (Anonymous)  
+  - Firestore (NoSQL user history storage)
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+- [Google Gemini API](https://makersuite.google.com/app)  
+  - Powers question-answering intelligence
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+### 🚀 Deployment
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+- Fully compatible with [Vercel](https://vercel.com/) or [Netlify](https://netlify.com/) for easy deployment
 
-## Learn More
+---
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## 🛠 Local Setup & Installation
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+Follow the steps below to run the project locally:
 
-### Code Splitting
+### 1. Clone the Repository
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+```bash
+git clone https://github.com/your-username/charak-samhita-qa.git
+cd charak-samhita-qa
+````
+2. Install Dependencies
+````bash
+npm install
+````
+3. Set Up Environment Variables
+4. 
+Create a .env file in the root directory and add your API keys:
 
-### Analyzing the Bundle Size
+env
+````bash
+REACT_APP_FIREBASE_API_KEY="YOUR_FIREBASE_API_KEY"
+REACT_APP_FIREBASE_AUTH_DOMAIN="YOUR_FIREBASE_AUTH_DOMAIN"
+REACT_APP_FIREBASE_PROJECT_ID="YOUR_FIREBASE_PROJECT_ID"
+REACT_APP_FIREBASE_STORAGE_BUCKET="YOUR_FIREBASE_STORAGE_BUCKET"
+REACT_APP_FIREBASE_MESSAGING_SENDER_ID="YOUR_FIREBASE_MESSAGING_SENDER_ID"
+REACT_APP_FIREBASE_APP_ID="YOUR_FIREBASE_APP_ID"
+REACT_APP_GEMINI_API_KEY="YOUR_GEMINI_API_KEY"
+````
+🔒 Never commit your .env file. Ensure it's listed in .gitignore.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+4. Start the Development Server
+````
+npm start
+````
+App will run at: http://localhost:3000
 
-### Making a Progressive Web App
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+🧠 Future Enhancements
+1. Multilingual support for Sanskrit/Hindi queries
+2. Personalized suggestions based on usage
+3. Offline-first mode with caching
+4. Admin dashboard to manage verses/Q&A base
 
-### Advanced Configuration
+📜 License
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+-This project is open-source and available under the MIT License.
 
-### Deployment
+🙏 Acknowledgements
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+-Ancient wisdom from the Charak Samhita
 
-### `npm run build` fails to minify
+-Google Gemini API
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+-Firebase
