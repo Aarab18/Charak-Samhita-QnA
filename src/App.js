@@ -2,10 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { initializeApp } from 'firebase/app';
 import { getAuth, signInAnonymously, onAuthStateChanged } from 'firebase/auth';
 import { getFirestore, doc, setDoc, getDoc, collection, addDoc, query, onSnapshot, serverTimestamp } from 'firebase/firestore';
-import { ArrowRight, Book, HelpCircle, User, ServerCrash, Leaf, History, X, MessageSquare } from 'lucide-react';
+import { ArrowRight, Book, HelpCircle, User, ServerCrash, Leaf, History, X, MessageSquare, Send, CheckCircle } from 'lucide-react';
 
 // --- Firebase Configuration ---
-// This now correctly reads from your .env file
 const firebaseConfig = {
     apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
     authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,
@@ -14,8 +13,6 @@ const firebaseConfig = {
     messagingSenderId: process.env.REACT_APP_FIREBASE_MESSAGING_SENDER_ID,
     appId: process.env.REACT_APP_FIREBASE_APP_ID
 };
-const appId = process.env.REACT_APP_FIREBASE_APP_ID || 'default-charak-qa';
-
 
 // --- Custom Loader Component ---
 const LotusLoader = () => (
@@ -31,32 +28,6 @@ const WisdomOfTheDay = () => {
         { text: "The body and the mind are the abodes of both disease and happiness. The balanced use of them is the cause of happiness.", citation: "Sutra Sthana 1:55" },
         { text: "Life (Ayu) is the combination of body, senses, mind and reincarnating soul. Ayurveda is the most sacred science of life, beneficial to humans in both this world and the world beyond.", citation: "Sutra Sthana 1:42-43" },
         { text: "That which is wholesome and that which is unwholesome for a happy and unhappy life, and the measure of life itself, is explained in Ayurveda.", citation: "Sutra Sthana 1:41" },
-        { text: "Mind, soul and body - these three are like a tripod; the world is sustained by their combination.", citation: "Sutra Sthana 1:46" },
-        { text: "Health is the supreme foundation of virtue, wealth, desire, and liberation. Diseases are the destroyers of this foundation, of well-being, and of life itself.", citation: "Sutra Sthana 1:15" },
-        { text: "The three main causes of disease are the excessive, deficient, and wrongful utilization of time, intellect, and the objects of the senses.", citation: "Sutra Sthana 1:54" },
-        { text: "Vata, Pitta, and Kapha are the three doshas of the body. When they are in a state of equilibrium, they maintain the body; when imbalanced, they afflict it.", citation: "Sutra Sthana 1:57" },
-        { text: "The physician, the medicines, the attendant, and the patient are the four essential pillars of treatment. Successful treatment depends on the proper qualities of all four.", citation: "Sutra Sthana 9:3" },
-        { text: "Everything in the universe is composed of the five great elements (Pancha Mahabhutas): space, air, fire, water, and earth.", citation: "Sharira Sthana 1:16" },
-        { text: "That which brings about equilibrium of the bodily tissues is wholesome; that which causes imbalance is unwholesome.", citation: "Sutra Sthana 25:40" },
-        { text: "One should not suppress the natural urges of the body, such as those for urination, defecation, flatus, sneezing, thirst, hunger, sleep, and breathlessness from exertion.", citation: "Sutra Sthana 7:3-4" },
-        { text: "The digestive fire (Agni) is the root of all health. When Agni is balanced, one experiences long life, strength, health, enthusiasm, and vitality.", citation: "Chikitsa Sthana 15:3-4" },
-        { text: "A wise person should eat only after the previous meal has been digested, in the proper quantity, as this is the key to maintaining health.", citation: "Vimana Sthana 2:4" },
-        { text: "The mind is the controller of the senses. By controlling the mind, one can achieve control over the senses and attain well-being.", citation: "Sharira Sthana 1:135" },
-        { text: "Sleep, when enjoyed at the proper time, brings about happiness, nourishment, strength, virility, knowledge, and life itself.", citation: "Sutra Sthana 21:36" },
-        { text: "A person who always consumes wholesome food and follows a disciplined lifestyle, who acts with foresight, and is detached from the objects of the senses, remains free from diseases.", citation: "Sutra Sthana 10:8" },
-        { text: "The qualities of the physician should include profound knowledge of the science, practical experience, dexterity, and purity of body and mind.", citation: "Sutra Sthana 9:6" },
-        { text: "Just as a chariot cannot move with a single wheel, the body cannot be maintained without both a wholesome diet and a disciplined lifestyle.", citation: "Sutra Sthana 25:35" },
-        { text: "The three supports of life are food, sleep, and a regulated lifestyle (Brahmacharya). By supporting the body with these three, one is endowed with strength, complexion, and growth.", citation: "Sutra Sthana 11:35" },
-        { text: "Intelligence, patience, and self-control—one who possesses these three qualities can conquer any disease.", citation: "Sutra Sthana 11:7" },
-        { text: "The six tastes (sweet, sour, salty, pungent, bitter, astringent) should be used properly. Their balanced use maintains health, while their imbalanced use leads to disorders.", citation: "Sutra Sthana 1:65" },
-        { text: "A wise person should not be ashamed of not knowing something. Not asking questions is the real cause of ignorance.", citation: "Vimana Sthana 8:14" },
-        { text: "The heart is considered the primary seat of consciousness in the body.", citation: "Sutra Sthana 30:4" },
-        { text: "All actions, whether good or bad, are dependent on the ten vessels of life which have their root in the heart.", citation: "Sutra Sthana 30:6" },
-        { text: "The aim of Ayurveda is to maintain the health of the healthy and to cure the disease of the sick.", citation: "Sutra Sthana 30:26" },
-        { text: "Even a potent poison can become an excellent medicine if administered correctly. Similarly, even a good medicine can act as a poison if used improperly.", citation: "Sutra Sthana 1:126" },
-        { text: "One should protect one's health with great care, as it is the means to achieve all objectives in life.", citation: "Sutra Sthana 5:13" },
-        { text: "The body of a person who cleanses their body channels (Srotas) regularly does not get afflicted by diseases easily.", citation: "Sutra Sthana 5:21" },
-        { text: "Compassion for all living beings is a primary quality of a good physician.", citation: "Sutra Sthana 9:26" }
     ];
     const [verse, setVerse] = useState(null);
 
@@ -116,6 +87,77 @@ const BotAnswer = ({ text }) => {
     );
 };
 
+// --- Feedback Modal Component (UI Improved) ---
+const FeedbackModal = ({ isOpen, onClose, username, userId, db }) => {
+    const [feedbackText, setFeedbackText] = useState('');
+    const [status, setStatus] = useState('idle'); // idle, submitting, submitted, error
+
+    const handleSubmit = async () => {
+        if (!feedbackText.trim() || !db || !userId) return;
+        setStatus('submitting');
+        try {
+            await addDoc(collection(db, 'feedback'), {
+                text: feedbackText,
+                userId: userId,
+                username: username,
+                timestamp: serverTimestamp(),
+                url: window.location.href,
+            });
+            setStatus('submitted');
+            setFeedbackText('');
+            setTimeout(() => {
+                onClose();
+                setStatus('idle');
+            }, 2500);
+        } catch (e) {
+            console.error("Error submitting feedback:", e);
+            setStatus('error');
+        }
+    };
+
+    if (!isOpen) return null;
+
+    return (
+        <div className="fixed inset-0 bg-black/70 backdrop-blur-md flex items-center justify-center z-50 p-4 animate-fade-in">
+            <div className="bg-stone-800/90 border border-stone-700 rounded-lg shadow-2xl p-8 w-full max-w-md relative">
+                <button onClick={onClose} className="absolute top-4 right-4 text-stone-400 hover:text-white transition-colors">
+                    <X size={24} />
+                </button>
+                
+                {status === 'submitted' ? (
+                    <div className="text-center py-8">
+                        <CheckCircle className="w-16 h-16 text-teal-400 mx-auto mb-4" />
+                        <h3 className="text-2xl font-serif-lora font-bold text-stone-100">Thank You!</h3>
+                        <p className="text-stone-300">Your wisdom has been shared.</p>
+                    </div>
+                ) : (
+                    <>
+                        <h2 className="text-2xl font-serif-lora font-bold text-amber-400 mb-2">Share Feedback</h2>
+                        <p className="text-stone-300 mb-6">Help us improve this experience. What are your thoughts?</p>
+                        <textarea
+                            value={feedbackText}
+                            onChange={(e) => setFeedbackText(e.target.value)}
+                            placeholder="Your feedback helps us grow..."
+                            className="w-full h-32 px-4 py-3 bg-stone-700/50 border border-stone-600 text-stone-100 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-amber-500 outline-none transition placeholder:text-stone-400 mb-4"
+                            disabled={status === 'submitting'}
+                        />
+                        {status === 'error' && <p className="text-red-400 text-sm mb-4">Sorry, an error occurred. Please try again.</p>}
+                        <button
+                            onClick={handleSubmit}
+                            disabled={!feedbackText.trim() || status === 'submitting'}
+                            className="w-full bg-amber-500 text-white font-bold py-3 px-4 rounded-lg hover:bg-amber-600 disabled:bg-stone-600 transition-all flex items-center justify-center gap-2 transform hover:scale-105"
+                        >
+                            {status === 'submitting' ? 'Submitting...' : 'Submit Feedback'}
+                            {status !== 'submitting' && <Send size={18} />}
+                        </button>
+                    </>
+                )}
+            </div>
+        </div>
+    );
+};
+
+
 // --- Main App Component ---
 export default function App() {
     // --- State Management ---
@@ -135,8 +177,6 @@ export default function App() {
     const [questionHistory, setQuestionHistory] = useState([]);
     const [isHistoryOpen, setIsHistoryOpen] = useState(false);
     const [isFeedbackOpen, setIsFeedbackOpen] = useState(false);
-    const [feedbackText, setFeedbackText] = useState('');
-    const [feedbackMessage, setFeedbackMessage] = useState('');
 
     const suggestedTopics = ["What is Tridosha?", "Explain the concept of Agni", "What are the Pancha Mahabhutas?", "Describe the importance of Dinacharya"];
 
@@ -149,11 +189,7 @@ export default function App() {
         style.id = styleId;
         style.textContent = `
             @import url('https://fonts.googleapis.com/css2?family=Lora:wght@400;700&family=Inter:wght@400;500;700&display=swap');
-            body { 
-                font-family: 'Inter', sans-serif; 
-                scrollbar-width: thin;
-                scrollbar-color: #14b8a6 #1c1917;
-            }
+            body { font-family: 'Inter', sans-serif; scrollbar-width: thin; scrollbar-color: #14b8a6 #1c1917; }
             .font-serif-lora { font-family: 'Lora', serif; }
             .bg-ayurveda-texture { background-color: #292524; background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%2392400e' fill-opacity='0.1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E"); }
             ::-webkit-scrollbar { width: 12px; }
@@ -185,7 +221,7 @@ export default function App() {
             const unsubscribe = onAuthStateChanged(authInstance, async (user) => {
                 if (user) {
                     setUserId(user.uid);
-                    const userDocRef = doc(dbInstance, `artifacts/${appId}/users`, user.uid);
+                    const userDocRef = doc(dbInstance, "users", user.uid);
                     const userDocSnap = await getDoc(userDocRef);
                     if (userDocSnap.exists()) {
                         setUsername(userDocSnap.data().username);
@@ -208,7 +244,7 @@ export default function App() {
     // --- Fetch History from Firestore ---
     useEffect(() => {
         if (isAuthReady && db && userId) {
-            const historyCollection = collection(db, `artifacts/${appId}/users/${userId}/history`);
+            const historyCollection = collection(db, `users/${userId}/history`);
             const q = query(historyCollection);
             const unsubscribe = onSnapshot(q, (querySnapshot) => {
                 const history = [];
@@ -227,7 +263,7 @@ export default function App() {
     const handleLogin = async () => {
         if (!inputUsername.trim() || !userId || !db) return;
         try {
-            const userDocRef = doc(db, `artifacts/${appId}/users`, userId);
+            const userDocRef = doc(db, "users", userId);
             await setDoc(userDocRef, { username: inputUsername });
             setUsername(inputUsername);
             setShowLogin(false);
@@ -273,7 +309,7 @@ export default function App() {
 
             // Save to history
             if (db && userId) {
-                await addDoc(collection(db, `artifacts/${appId}/users/${userId}/history`), {
+                await addDoc(collection(db, `users/${userId}/history`), {
                     question: q,
                     answer: botText,
                     timestamp: serverTimestamp()
@@ -292,26 +328,6 @@ export default function App() {
         setLastQuestion(item.question);
         setAnswer(item.answer);
         setIsHistoryOpen(false);
-    };
-
-    const handleSubmitFeedback = async () => {
-        if (!feedbackText.trim() || !db || !userId) return;
-        try {
-            await addDoc(collection(db, `artifacts/${appId}/feedback`), {
-                feedback: feedbackText,
-                userId: userId,
-                timestamp: serverTimestamp()
-            });
-            setFeedbackText('');
-            setFeedbackMessage('Thank you for your feedback!');
-            setTimeout(() => {
-                setIsFeedbackOpen(false);
-                setFeedbackMessage('');
-            }, 2000);
-        } catch (e) {
-            console.error("Error submitting feedback:", e);
-            setFeedbackMessage('Could not submit feedback. Please try again.');
-        }
     };
 
     // --- Render Logic ---
@@ -356,36 +372,14 @@ export default function App() {
 
     return (
         <div className="min-h-screen bg-ayurveda-texture font-sans text-stone-200">
-            {/* Feedback Modal */}
-            {isFeedbackOpen && (
-                <div className="fixed inset-0 bg-stone-900/80 backdrop-blur-sm flex items-center justify-center z-50 p-4">
-                    <div className="bg-stone-800 border border-stone-700 rounded-lg shadow-2xl p-6 w-full max-w-md relative">
-                        <button onClick={() => setIsFeedbackOpen(false)} className="absolute top-3 right-3 text-stone-400 hover:text-white"><X /></button>
-                        <h2 className="font-serif-lora text-xl text-stone-100 mb-4">Share Your Feedback</h2>
-                        {feedbackMessage ? (
-                            <p className="text-center text-teal-400">{feedbackMessage}</p>
-                        ) : (
-                            <>
-                                <textarea
-                                    value={feedbackText}
-                                    onChange={(e) => setFeedbackText(e.target.value)}
-                                    placeholder="Tell us what you think or suggest a feature..."
-                                    className="w-full h-32 p-3 bg-stone-700/50 border border-stone-600 text-stone-100 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-amber-500 outline-none transition placeholder:text-stone-400"
-                                />
-                                <button
-                                    onClick={handleSubmitFeedback}
-                                    disabled={!feedbackText.trim()}
-                                    className="w-full mt-4 bg-amber-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-amber-600 disabled:bg-stone-600 transition"
-                                >
-                                    Submit Feedback
-                                </button>
-                            </>
-                        )}
-                    </div>
-                </div>
-            )}
+            <FeedbackModal 
+                isOpen={isFeedbackOpen} 
+                onClose={() => setIsFeedbackOpen(false)}
+                db={db}
+                userId={userId}
+                username={username}
+            />
 
-            {/* History Sidebar */}
             <div className={`fixed top-0 left-0 h-full w-80 bg-stone-900/80 backdrop-blur-lg shadow-2xl z-40 transform transition-transform duration-300 ease-in-out ${isHistoryOpen ? 'translate-x-0' : '-translate-x-full'}`}>
                 <div className="flex justify-between items-center p-4 border-b border-stone-700">
                     <h2 className="font-serif-lora text-xl text-stone-100">History</h2>
@@ -403,7 +397,7 @@ export default function App() {
             <header className="bg-stone-900/30 backdrop-blur-sm shadow-lg sticky top-0 z-20 border-b border-stone-700">
                 <div className="max-w-5xl mx-auto p-4 flex justify-between items-center">
                     <div className="flex items-center gap-3">
-                        <button onClick={() => setIsHistoryOpen(true)} className="p-2 rounded-full hover:bg-stone-700/50 text-stone-300 hover:text-white transition" title="View History">
+                        <button onClick={() => setIsHistoryOpen(true)} title="View History" className="p-2 rounded-full hover:bg-stone-700/50 text-stone-300 hover:text-white transition">
                             <History size={20} />
                         </button>
                         <h1 className="text-2xl font-serif-lora font-bold text-stone-100 hidden sm:block">Charak Samhita Q&A</h1>
@@ -485,19 +479,15 @@ export default function App() {
                     )}
                 </div>
             </main>
-            
-            {/* Floating Feedback Button */}
-            <div className="fixed bottom-6 right-6 group">
-                <button 
-                    onClick={() => setIsFeedbackOpen(true)}
-                    className="bg-teal-500 text-white rounded-full p-4 shadow-lg hover:bg-teal-600 transition-transform transform hover:scale-110"
-                >
-                    <MessageSquare size={24} />
-                </button>
-                <div className="absolute bottom-1/2 translate-y-1/2 right-full mr-3 w-max bg-stone-800 text-white text-sm rounded-md px-3 py-1 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">
-                    Faced a problem? Send feedback!
-                </div>
-            </div>
+
+            {/* Floating Action Button for Feedback */}
+            <button
+                onClick={() => setIsFeedbackOpen(true)}
+                title="Submit Feedback"
+                className="fixed bottom-8 right-8 bg-teal-600 text-white p-4 rounded-full shadow-lg hover:bg-teal-700 transition-all transform hover:scale-110 z-30"
+            >
+                <MessageSquare size={24} />
+            </button>
         </div>
     );
 }
