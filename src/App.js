@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { initializeApp } from 'firebase/app';
 import { getAuth, signInAnonymously, onAuthStateChanged } from 'firebase/auth';
 import { getFirestore, doc, setDoc, getDoc, collection, addDoc, query, onSnapshot, serverTimestamp } from 'firebase/firestore';
-import { ArrowRight, Book, HelpCircle, User, ServerCrash, Leaf, History, X, MessageSquare } from 'lucide-react';
+import { ArrowRight, Book, HelpCircle, User, ServerCrash, Leaf, History, X } from 'lucide-react';
 
 // --- Firebase Configuration ---
 // This now correctly reads from your .env file
@@ -14,8 +14,6 @@ const firebaseConfig = {
     messagingSenderId: process.env.REACT_APP_FIREBASE_MESSAGING_SENDER_ID,
     appId: process.env.REACT_APP_FIREBASE_APP_ID
 };
-const appId = process.env.REACT_APP_FIREBASE_APP_ID || 'default-charak-qa';
-
 
 // --- Custom Loader Component ---
 const LotusLoader = () => (
@@ -134,9 +132,6 @@ export default function App() {
     const [isInputFocused, setIsInputFocused] = useState(false);
     const [questionHistory, setQuestionHistory] = useState([]);
     const [isHistoryOpen, setIsHistoryOpen] = useState(false);
-    const [isFeedbackOpen, setIsFeedbackOpen] = useState(false);
-    const [feedbackText, setFeedbackText] = useState('');
-    const [feedbackMessage, setFeedbackMessage] = useState('');
 
     const suggestedTopics = ["What is Tridosha?", "Explain the concept of Agni", "What are the Pancha Mahabhutas?", "Describe the importance of Dinacharya"];
 
@@ -185,7 +180,7 @@ export default function App() {
             const unsubscribe = onAuthStateChanged(authInstance, async (user) => {
                 if (user) {
                     setUserId(user.uid);
-                    const userDocRef = doc(dbInstance, `users`, user.uid);
+                    const userDocRef = doc(dbInstance, "users", user.uid);
                     const userDocSnap = await getDoc(userDocRef);
                     if (userDocSnap.exists()) {
                         setUsername(userDocSnap.data().username);
@@ -294,26 +289,6 @@ export default function App() {
         setIsHistoryOpen(false);
     };
 
-    const handleSubmitFeedback = async () => {
-        if (!feedbackText.trim() || !db || !userId) return;
-        try {
-            await addDoc(collection(db, `feedback`), {
-                feedback: feedbackText,
-                userId: userId,
-                timestamp: serverTimestamp()
-            });
-            setFeedbackText('');
-            setFeedbackMessage('Thank you for your feedback!');
-            setTimeout(() => {
-                setIsFeedbackOpen(false);
-                setFeedbackMessage('');
-            }, 2000);
-        } catch (e) {
-            console.error("Error submitting feedback:", e);
-            setFeedbackMessage('Could not submit feedback. Please try again.');
-        }
-    };
-
     // --- Render Logic ---
     if (!isAuthReady) {
         return (
@@ -356,35 +331,6 @@ export default function App() {
 
     return (
         <div className="min-h-screen bg-ayurveda-texture font-sans text-stone-200">
-            {/* Feedback Modal */}
-            {isFeedbackOpen && (
-                <div className="fixed inset-0 bg-stone-900/80 backdrop-blur-sm flex items-center justify-center z-50 p-4">
-                    <div className="bg-stone-800 border border-stone-700 rounded-lg shadow-2xl p-6 w-full max-w-md relative">
-                        <button onClick={() => setIsFeedbackOpen(false)} className="absolute top-3 right-3 text-stone-400 hover:text-white"><X /></button>
-                        <h2 className="font-serif-lora text-xl text-stone-100 mb-4">Share Your Feedback</h2>
-                        {feedbackMessage ? (
-                            <p className="text-center text-teal-400">{feedbackMessage}</p>
-                        ) : (
-                            <>
-                                <textarea
-                                    value={feedbackText}
-                                    onChange={(e) => setFeedbackText(e.target.value)}
-                                    placeholder="Tell us what you think or suggest a feature..."
-                                    className="w-full h-32 p-3 bg-stone-700/50 border border-stone-600 text-stone-100 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-amber-500 outline-none transition placeholder:text-stone-400"
-                                />
-                                <button
-                                    onClick={handleSubmitFeedback}
-                                    disabled={!feedbackText.trim()}
-                                    className="w-full mt-4 bg-amber-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-amber-600 disabled:bg-stone-600 transition"
-                                >
-                                    Submit Feedback
-                                </button>
-                            </>
-                        )}
-                    </div>
-                </div>
-            )}
-
             {/* History Sidebar */}
             <div className={`fixed top-0 left-0 h-full w-80 bg-stone-900/80 backdrop-blur-lg shadow-2xl z-40 transform transition-transform duration-300 ease-in-out ${isHistoryOpen ? 'translate-x-0' : '-translate-x-full'}`}>
                 <div className="flex justify-between items-center p-4 border-b border-stone-700">
@@ -485,19 +431,6 @@ export default function App() {
                     )}
                 </div>
             </main>
-            
-            {/* Floating Feedback Button */}
-            <div className="fixed bottom-6 right-6 group">
-                <button 
-                    onClick={() => setIsFeedbackOpen(true)}
-                    className="bg-teal-500 text-white rounded-full p-4 shadow-lg hover:bg-teal-600 transition-transform transform hover:scale-110"
-                >
-                    <MessageSquare size={24} />
-                </button>
-                <div className="absolute bottom-1/2 translate-y-1/2 right-full mr-3 w-max bg-stone-800 text-white text-sm rounded-md px-3 py-1 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">
-                    Faced a problem? Send feedback!
-                </div>
-            </div>
         </div>
     );
 }
