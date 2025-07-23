@@ -29,7 +29,32 @@ const WisdomOfTheDay = () => {
         { text: "The body and the mind are the abodes of both disease and happiness. The balanced use of them is the cause of happiness.", citation: "Sutra Sthana 1:55" },
         { text: "Life (Ayu) is the combination of body, senses, mind and reincarnating soul. Ayurveda is the most sacred science of life, beneficial to humans in both this world and the world beyond.", citation: "Sutra Sthana 1:42-43" },
         { text: "That which is wholesome and that which is unwholesome for a happy and unhappy life, and the measure of life itself, is explained in Ayurveda.", citation: "Sutra Sthana 1:41" },
-        { text: "Mind, soul and body – these three are like a tripod; the world is sustained by their combination.", citation: "Sutra Sthana 1:46" }
+        { text: "Mind, soul and body - these three are like a tripod; the world is sustained by their combination.", citation: "Sutra Sthana 1:46" },
+        { text: "Health is the supreme foundation of virtue, wealth, desire, and liberation. Diseases are the destroyers of this foundation, of well-being, and of life itself.", citation: "Sutra Sthana 1:15" },
+        { text: "The three main causes of disease are the excessive, deficient, and wrongful utilization of time, intellect, and the objects of the senses.", citation: "Sutra Sthana 1:54" },
+        { text: "Vata, Pitta, and Kapha are the three doshas of the body. When they are in a state of equilibrium, they maintain the body; when imbalanced, they afflict it.", citation: "Sutra Sthana 1:57" },
+        { text: "The physician, the medicines, the attendant, and the patient are the four essential pillars of treatment. Successful treatment depends on the proper qualities of all four.", citation: "Sutra Sthana 9:3" },
+        { text: "Everything in the universe is composed of the five great elements (Pancha Mahabhutas): space, air, fire, water, and earth.", citation: "Sharira Sthana 1:16" },
+        { text: "That which brings about equilibrium of the bodily tissues is wholesome; that which causes imbalance is unwholesome.", citation: "Sutra Sthana 25:40" },
+        { text: "One should not suppress the natural urges of the body, such as those for urination, defecation, flatus, sneezing, thirst, hunger, sleep, and breathlessness from exertion.", citation: "Sutra Sthana 7:3-4" },
+        { text: "The digestive fire (Agni) is the root of all health. When Agni is balanced, one experiences long life, strength, health, enthusiasm, and vitality.", citation: "Chikitsa Sthana 15:3-4" },
+        { text: "A wise person should eat only after the previous meal has been digested, in the proper quantity, as this is the key to maintaining health.", citation: "Vimana Sthana 2:4" },
+        { text: "The mind is the controller of the senses. By controlling the mind, one can achieve control over the senses and attain well-being.", citation: "Sharira Sthana 1:135" },
+        { text: "Sleep, when enjoyed at the proper time, brings about happiness, nourishment, strength, virility, knowledge, and life itself.", citation: "Sutra Sthana 21:36" },
+        { text: "A person who always consumes wholesome food and follows a disciplined lifestyle, who acts with foresight, and is detached from the objects of the senses, remains free from diseases.", citation: "Sutra Sthana 10:8" },
+        { text: "The qualities of the physician should include profound knowledge of the science, practical experience, dexterity, and purity of body and mind.", citation: "Sutra Sthana 9:6" },
+        { text: "Just as a chariot cannot move with a single wheel, the body cannot be maintained without both a wholesome diet and a disciplined lifestyle.", citation: "Sutra Sthana 25:35" },
+        { text: "The three supports of life are food, sleep, and a regulated lifestyle (Brahmacharya). By supporting the body with these three, one is endowed with strength, complexion, and growth.", citation: "Sutra Sthana 11:35" },
+        { text: "Intelligence, patience, and self-control—one who possesses these three qualities can conquer any disease.", citation: "Sutra Sthana 11:7" },
+        { text: "The six tastes (sweet, sour, salty, pungent, bitter, astringent) should be used properly. Their balanced use maintains health, while their imbalanced use leads to disorders.", citation: "Sutra Sthana 1:65" },
+        { text: "A wise person should not be ashamed of not knowing something. Not asking questions is the real cause of ignorance.", citation: "Vimana Sthana 8:14" },
+        { text: "The heart is considered the primary seat of consciousness in the body.", citation: "Sutra Sthana 30:4" },
+        { text: "All actions, whether good or bad, are dependent on the ten vessels of life which have their root in the heart.", citation: "Sutra Sthana 30:6" },
+        { text: "The aim of Ayurveda is to maintain the health of the healthy and to cure the disease of the sick.", citation: "Sutra Sthana 30:26" },
+        { text: "Even a potent poison can become an excellent medicine if administered correctly. Similarly, even a good medicine can act as a poison if used improperly.", citation: "Sutra Sthana 1:126" },
+        { text: "One should protect one's health with great care, as it is the means to achieve all objectives in life.", citation: "Sutra Sthana 5:13" },
+        { text: "The body of a person who cleanses their body channels (Srotas) regularly does not get afflicted by diseases easily.", citation: "Sutra Sthana 5:21" },
+        { text: "Compassion for all living beings is a primary quality of a good physician.", citation: "Sutra Sthana 9:26" }
     ];
     const [verse, setVerse] = useState(null);
 
@@ -72,7 +97,7 @@ const BotAnswer = ({ text }) => {
         const citation = text.substring(citationIndex).trim();
         return (
             <div className="bg-white/80 backdrop-blur-sm rounded-lg shadow-2xl p-6 md:p-8 mt-6 animate-fade-in relative overflow-hidden">
-                 <div className="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-amber-400 to-teal-400"></div>
+                <div className="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-amber-400 to-teal-400"></div>
                 <div className="text-stone-800 text-base leading-relaxed whitespace-pre-wrap pt-4">{formatText(answer)}</div>
                 <p className="mt-6 pt-4 border-t border-amber-200 text-sm italic text-amber-800 font-medium">
                     {citation}
@@ -83,7 +108,7 @@ const BotAnswer = ({ text }) => {
 
     return (
         <div className="bg-white/80 backdrop-blur-sm rounded-lg shadow-2xl p-6 md:p-8 mt-6 animate-fade-in relative overflow-hidden">
-             <div className="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-amber-400 to-teal-400"></div>
+            <div className="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-amber-400 to-teal-400"></div>
             <div className="text-stone-800 text-base leading-relaxed whitespace-pre-wrap pt-4">{formatText(text)}</div>
         </div>
     );
@@ -113,7 +138,7 @@ export default function App() {
     // --- Effect for CSS and Fonts ---
     useEffect(() => {
         const styleId = 'app-styles';
-        if (document.getElementById(styleId)) return; 
+        if (document.getElementById(styleId)) return;
 
         const style = document.createElement('style');
         style.id = styleId;
@@ -164,7 +189,7 @@ export default function App() {
                         setShowLogin(true);
                     }
                 } else {
-                   await signInAnonymously(authInstance);
+                    await signInAnonymously(authInstance);
                 }
                 setIsAuthReady(true);
             });
@@ -174,7 +199,7 @@ export default function App() {
             setError("Failed to connect to services. Please refresh.");
         }
     }, []);
-    
+
     // --- Fetch History from Firestore ---
     useEffect(() => {
         if (isAuthReady && db && userId) {
@@ -243,7 +268,7 @@ export default function App() {
 
             // Save to history
             if (db && userId) {
-                 await addDoc(collection(db, `users/${userId}/history`), {
+                await addDoc(collection(db, `users/${userId}/history`), {
                     question: q,
                     answer: botText,
                     timestamp: serverTimestamp()
@@ -257,7 +282,7 @@ export default function App() {
             setIsLoading(false);
         }
     };
-    
+
     const handleSelectHistory = (item) => {
         setLastQuestion(item.question);
         setAnswer(item.answer);
@@ -362,20 +387,20 @@ export default function App() {
                         </div>
                     </div>
                 </div>
-                
+
                 <div className="mt-8">
                     <h3 className="text-md font-semibold text-stone-300 mb-3 text-center font-serif-lora">Or explore a suggested topic</h3>
                     <div className="flex flex-wrap justify-center gap-3">
                         {suggestedTopics.map(topic => (
-                             <button 
+                            <button
                                 key={topic}
                                 onClick={() => handleAskQuestion(topic)}
                                 disabled={isLoading}
                                 className="bg-teal-900/50 text-teal-200 font-medium px-4 py-2 rounded-full text-sm hover:bg-teal-800/70 hover:shadow-lg transition-all disabled:opacity-50 border border-teal-800 flex items-center gap-2"
-                             >
+                            >
                                 <Leaf size={14} />
                                 {topic}
-                             </button>
+                            </button>
                         ))}
                     </div>
                 </div>
@@ -392,16 +417,16 @@ export default function App() {
                         </div>
                     )}
                     {!isLoading && !answer && !error && (
-                         <div className="text-center text-stone-400 mt-12 p-6">
-                            <HelpCircle size={48} className="mx-auto mb-4 text-stone-500"/>
+                        <div className="text-center text-stone-400 mt-12 p-6">
+                            <HelpCircle size={48} className="mx-auto mb-4 text-stone-500" />
                             <p className="text-lg font-serif-lora">Your answer will appear here</p>
                             <p className="text-sm">Ask any question about the Charak Samhita to get a detailed, cited response.</p>
                         </div>
                     )}
                     {answer && (
                         <div>
-                             <h3 className="text-xl font-bold font-serif-lora text-stone-100 mb-2">Answer for: "{lastQuestion}"</h3>
-                             <BotAnswer text={answer} />
+                            <h3 className="text-xl font-bold font-serif-lora text-stone-100 mb-2">Answer for: "{lastQuestion}"</h3>
+                            <BotAnswer text={answer} />
                         </div>
                     )}
                 </div>
